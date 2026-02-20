@@ -1,0 +1,138 @@
+{
+	"info": {
+		"_postman_id": "cb1e9277-5869-49dc-b100-87b3dcb92499",
+		"name": "BackEnd - Auth(Laravel)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27893194"
+	},
+	"item": [
+		{
+			"name": "Profile",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "wPsy7lMcm3ipErK6wLjnnnVlmrGqnzBMOCR7Iirm03606a04",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/logout",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Azizbek\",\n  \"email\": \"devdilshodovich@gmail.com\",\n  \"password\": \"123456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/login",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Azizbek",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "devdilshodovich@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/register",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
