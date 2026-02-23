@@ -3,42 +3,40 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RegisterRequest;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
+use App\Services\AuthService;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
+    public function register(RegisterRequest $request, AuthService $authService, $code = 201)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6',
-        ]);
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        return response()->json(['message' => 'User registered successfully', 'user' => $user], 201);
+        $user = $authService->register($request->validated());
+        return response()->json([
+            'success' => true,
+            'message' => 'User registered successfully',
+            'data' => new UserResource($user)
+        ], $code);
     }
 
-    public function login(Request $request)
+    public function login(Request $request, AuthService $authService)
     {
-        $credentials = $request->only('email', 'password');
+        $token = $authService->login($request->only('email', 'password'));
 
-        if(!Auth::attempt($credentials)) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+        if (!$token) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized',
+                'data' => null
+            ], 401);
         }
 
-        $user = Auth::user();
-        $token = $user->createToken('api-token')->plainTextToken;
-
-        return response()->json(['message' => 'Login successful', 'token' => $token]);
+        return response()->json([
+            'success' => true,
+            'message' => 'Login successful',
+            'token' => $token
+        ]);
     }
 
     public function logout(Request $request)
